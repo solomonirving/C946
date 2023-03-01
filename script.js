@@ -78,7 +78,8 @@ function loadLabeledImages() {
     labels.map(async (label) => {
       const descriptions = [];
       for (let i = 1; i <= 20; i++) {
-        const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/solomonirving/C946/main/cleanedImages/${label}/${i}.jpg`);
+        // const img = await faceapi.fetchImage(`https://raw.githubusercontent.com/solomonirving/C946/main/cleanedImages/${label}/${i}.jpg`);
+        const img = await faceapi.fetchImage(`/cleanedImages/${label}/${i}.jpg`);
         const detections = await faceapi
           .detectSingleFace(img)
           .withFaceLandmarks()
