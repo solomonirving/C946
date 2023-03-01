@@ -55,12 +55,20 @@ function loadLabeledImages() {
     "Jim Rhodes",
     "Thor",
     "Tony Stark",
+
+    "Angelina Jolie",
+    "Denzel Washington",
+    "Jennifer Lawrence",
+    "Robert Downey Jr",
+    "Will Smith"
   ];
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
       for (let i = 1; i <= 2; i++) {
-        const img = await faceapi.fetchImage(``);
+        console.log(i)
+        // const img = await faceapi.fetchImage(``);
+        const img = await faceapi.fetchImage(`https://github.com/solomonirving/C946/tree/main/cleanedImages/${label}/${i}.jpg`);
         const detections = await faceapi
           .detectSingleFace(img)
           .withFaceLandmarks()
