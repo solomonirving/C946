@@ -1,3 +1,4 @@
+//get ID elements
 const imageUpload = document.getElementById("imageUpload");
 const personLabel = document.getElementById("personLabel");
 const button = document.getElementById("button");
@@ -5,6 +6,7 @@ const button = document.getElementById("button");
 let results;
 let item;
 
+//initiate API's
 Promise.all([
   faceapi.nets.faceRecognitionNet.loadFromUri("/models"),
   faceapi.nets.faceLandmark68Net.loadFromUri("/models"),
@@ -13,7 +15,9 @@ Promise.all([
 
 //Initiate Facial Recognition Function
 async function initAI() {
+  //Calls function to get image label
   const labeledFaceDescriptors = await loadLabeledImages();
+  //Matches face label and face
   const faceMatcher = new faceapi.FaceMatcher(labeledFaceDescriptors, 0.6);
   let image;
 
@@ -28,6 +32,7 @@ async function initAI() {
       .withFaceLandmarks()
       .withFaceDescriptors();
 
+    //Gets the results of the Facial Recognition Scan
     results = detections.map((d) => faceMatcher.findBestMatch(d.descriptor));
 
     //if the results are "unknown" throw danger alert
@@ -59,7 +64,7 @@ async function initAI() {
   });
 }
 
-//Match Label to Stored Image
+//function to match Label to scanned image
 function loadLabeledImages() {
   const labels = [
     "Angelina Jolie",
@@ -68,6 +73,7 @@ function loadLabeledImages() {
     "Robert Downey Jr",
     "Will Smith"
   ];
+  //Initiate API's/resolves all 
   return Promise.all(
     labels.map(async (label) => {
       const descriptions = [];
@@ -79,7 +85,7 @@ function loadLabeledImages() {
           .withFaceDescriptor();
         descriptions.push(detections.descriptor);
       }
-
+      //Returns the image label
       return new faceapi.LabeledFaceDescriptors(label, descriptions);
     })
   );
